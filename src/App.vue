@@ -1,11 +1,15 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
 import Map from "./components/Map.vue";
+import { ModalsContainer } from "vue-final-modal";
+import CountryModal from "./components/CountryModal.vue";
 </script>
 
 <template>
   <div>
-  <Map/>
+    <CountryModal />
+    <ModalsContainer />
+    <Map />
   </div>
 </template>
 

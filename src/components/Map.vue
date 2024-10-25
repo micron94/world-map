@@ -100,6 +100,16 @@ export default {
       iconHeight: 40,
       highlightedLayer: null,
       selectedCountry: null,
+      selectedStyle: {
+        weight: 2,
+        color: "#666",
+        fillOpacity: 0.7,
+      },
+      unselectedStyle: {
+        weight: 1,
+        color: "blue",
+        fillOpacity: 0.2,
+      },
     };
   },
 
@@ -120,51 +130,33 @@ export default {
         mouseout: this.resetHighlight,
         click: this.handleClick,
       });
-      layer.setStyle({
-        weight: 1,
-        color: "blue",
-        fillOpacity: 0.2,
-      });
+      layer.setStyle(this.unselectedStyle);
     },
     highlightFeature(e) {
       const layer = e.target;
-      layer.setStyle({
-        weight: 2,
-        color: "#666",
-        fillOpacity: 0.7,
-      });
+      layer.setStyle(this.selectedStyle);
 
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
       }
       this.highlightedLayer = layer;
     },
+    unselectCountry() {
+      layer.setStyle(this.unselectedStyle);
+      this.selectedCountry = null;
+    },
     handleClick(e) {
       open();
       const layer = e.target;
-      const defaultStyle = {
-        weight: 2,
-        color: "#666",
-        fillOpacity: 0.7,
-      };
+      const defaultStyle = this.selectedStyle;
 
       if (this.selectedCountry) {
         if (layer._leaflet_id === this.selectedCountry._leaflet_id) {
-          layer.setStyle({
-            weight: 1,
-            color: "blue",
-            fillOpacity: 0.2,
-          });
-          this.selectedCountry = null;
+          this.unselectCountry();
           return;
         } else {
-          const layer2 = this.selectedCountry;
-          if (layer2) {
-            layer2.setStyle({
-              weight: 1,
-              color: "blue",
-              fillOpacity: 0.2,
-            });
+          if (this.selectedCountry) {
+            this.selectedCountry.setStyle(this.unselectedStyle);
           }
           this.selectedCountry = null;
         }
@@ -177,11 +169,7 @@ export default {
       const layer = this.highlightedLayer;
       if (layer !== this.selectedCountry) {
         if (layer) {
-          layer.setStyle({
-            weight: 1,
-            color: "blue",
-            fillOpacity: 0.2,
-          });
+          layer.setStyle(this.unselectedStyle);
         }
         this.highlightedLayer = null;
       }

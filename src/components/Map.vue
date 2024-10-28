@@ -47,7 +47,9 @@
         <l-popup> lol </l-popup>
       </l-rectangle>
     </l-map>
+    <Transition>
     <CountryModal :showModal="showModal" :countryData="selectedCountryData" @modalClosed="toggleModal" v-if="showModal"/>   
+  </Transition>
   </div> 
  
 </template>
@@ -191,3 +193,17 @@ export default {
   },
 };
 </script>
+
+
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: 2s ease;
+
+}
+
+.v-enter-from,
+.v-leave-to {
+  transition: 2s ease;
+  transform: translate(100%, 0);
+}</style>

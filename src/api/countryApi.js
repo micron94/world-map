@@ -8,7 +8,7 @@
     }
 };
 
-export const getWeather = async(lat,lon) =>{ // recibe dos parametros diferentes, en este caso la latitud y longitud del pais seleccionado
+export const getWeather = async(lat,lon) =>{ 
     try {
         const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=74c2a8f9872ea2e46f48453a09a41371&units=metric`);
         const weatherAPI = await weatherResponse.json();

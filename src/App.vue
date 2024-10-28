@@ -21,6 +21,7 @@ import { ModalsContainer } from "vue-final-modal";
 #app {
   margin: 0;
   padding: 0;
+  max-width: 100%;
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);

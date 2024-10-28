@@ -33,4 +33,11 @@ const open = ref(true)
 
 }
 
+@media (max-width: 800px) {
+ .modal {
+  left: 0;
+  width: 100%;
+ }
+}
+
 </style>

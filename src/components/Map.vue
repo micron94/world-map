@@ -135,7 +135,7 @@ export default {
         console.log(this.selectedCountryData);
     }, 
     toggleModal(){
-      this.showModal = !this.showModal;  
+      this.showModal = false; 
     },
     highlightFeature(e) {
       const layer = e.target;
@@ -151,7 +151,6 @@ export default {
       this.selectedCountry = null;
     },
     handleClick(e) {
-      this.toggleModal();
       const layer = e.target;
       const defaultStyle = this.selectedStyle; 
 
@@ -167,6 +166,9 @@ export default {
         }
       } 
       this.selectedCountry = layer;
+      if(this.selectedCountry) {
+        this.showModal = true;
+      }
       layer.setStyle(defaultStyle);
       this.fetchCountry(e.target.feature.properties.sovereignt);
     },

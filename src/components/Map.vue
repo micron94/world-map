@@ -47,7 +47,9 @@
         <l-popup> lol </l-popup>
       </l-rectangle>
     </l-map>
-  </div>
+    <CountryModal :showModal="showModal" :countryData="selectedCountryData" @modalClosed="toggleModal" v-if="showModal"/>   
+  </div> 
+ 
 </template>
 <script>
 import {
@@ -61,23 +63,13 @@ import {
   LPolyline,
   LPolygon,
   LRectangle,
-  LGeoJson,
+  LGeoJson
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { statesData } from "../assets/us-states.js";
-import { useModal } from "vue-final-modal";
-import CountryModal from "./CountryModal.vue";
-
-const { open } = useModal({
-  component: CountryModal,
-  attrs: {
-    title: "Hello World!",
-  },
-  slots: {
-    default: "<p>The content of the modal</p>",
-  },
-});
+import  CountryModal  from "./CountryModal.vue";  
+import {getCountryByName } from "../api/countryApi.js";
 
 export default {
   components: {
@@ -92,14 +84,18 @@ export default {
     LPolyline,
     LPolygon,
     LRectangle,
+    CountryModal
   },
+
   data() {
     return {
-      zoom: 2,
+      zoom: 2, 
       iconWidth: 25,
       iconHeight: 40,
       highlightedLayer: null,
+      showModal: false,
       selectedCountry: null,
+      selectedCountryData: null,
       selectedStyle: {
         weight: 2,
         color: "#666",
@@ -110,9 +106,8 @@ export default {
         color: "blue",
         fillOpacity: 0.2,
       },
-    };
+    }; 
   },
-
   computed: {
     statesData() {
       return statesData;
@@ -132,6 +127,14 @@ export default {
       });
       layer.setStyle(this.unselectedStyle);
     },
+    async fetchCountry(name){
+        const data =  await getCountryByName(name);
+        this.selectedCountryData = data; 
+        console.log(this.selectedCountryData);
+    }, 
+    toggleModal(){
+      this.showModal = !this.showModal;  
+    },
     highlightFeature(e) {
       const layer = e.target;
       layer.setStyle(this.selectedStyle);
@@ -146,9 +149,9 @@ export default {
       this.selectedCountry = null;
     },
     handleClick(e) {
-      open();
+      this.toggleModal();
       const layer = e.target;
-      const defaultStyle = this.selectedStyle;
+      const defaultStyle = this.selectedStyle; 
 
       if (this.selectedCountry) {
         if (layer._leaflet_id === this.selectedCountry._leaflet_id) {
@@ -160,9 +163,10 @@ export default {
           }
           this.selectedCountry = null;
         }
-      }
+      } 
       this.selectedCountry = layer;
       layer.setStyle(defaultStyle);
+      this.fetchCountry(e.target.feature.properties.sovereignt);
     },
 
     resetHighlight() {

@@ -1,18 +1,16 @@
 <script setup>
 import Map from "./components/Map.vue";
 import { ModalsContainer } from "vue-final-modal";
-import CountryModal from "./components/CountryModal.vue";
 </script>
 
 <template>
   <div>
-    <CountryModal />
     <ModalsContainer />
     <Map />
   </div>
 </template>
 
-<style>
+<style> 
 .logo {
   height: 6em;
   padding: 1.5em;

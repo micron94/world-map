@@ -1,47 +1,31 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
-import { VueFinalModal } from "vue-final-modal";
-
-defineProps<{
-  title?: string;
-}>();
-
-const emit = defineEmits<{
-  (e: "update:modelValue", modelValue: boolean): void;
-}>();
+import { ref } from 'vue'
+const props = defineProps(['showModal', 'countryData'])
+const open = ref(true)
 </script>
-
+ 
 <template>
-  <VueFinalModal
-    class="modal-container"
-    content-class="flex flex-col p-4 bg-white dark:bg-black rounded border border-gray-100 dark:border-gray-800"
-    @update:model-value="(val) => emit('update:modelValue', val)"
-  >
-    <div class="modal-content">
-      <h1 v-if="title" class="text-2xl">
-        {{ title }}
-      </h1>
-      <button class="ml-auto" @click="emit('update:modelValue', false)">
-        <Icon icon="clarity:window-close-line" class="w-10 h-10" />
-      </button>
-    </div>
-    <slot />
-  </VueFinalModal>
-</template>
-
-<style>
-.modal-container {
+  <div v-if="props.showModal" class="modal">
+    <p>{{ props.countryData ? props.countryData.name.common : 'no data'}}</p>
+    <img :src="props.countryData ? props.countryData.flags.png : 'no data'"/>  
+    <button @click="$emit('modalClosed')">Close</button>
+  </div>   
+</template> 
+ 
+<style scoped>
+.modal {
+  position: fixed;
+  z-index: 999; 
+  top: 20%; 
+  left: 50%; 
   display: flex;
   justify-content: center;
-  position: absolute;
-  width: 100%;
-  height: 300px;
-  color: black;
-}
-
-.modal-content {
-  background: white;
-  width: 300px;
-  height: 300px;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  height: 400px;
+  border-radius: 10%;
+  width: 400px;
+  margin-left: -150px;
 }
 </style>

@@ -12,13 +12,17 @@
       <l-geo-json :geojson="statesData" :options="geojsonOptions" />
       <l-tile-layer
         url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
-      ></l-tile-layer> 
+      ></l-tile-layer>
     </l-map>
     <Transition>
-    <CountryModal :showModal="showModal" :countryData="selectedCountryData" @modalClosed="toggleModal" v-if="showModal"/>   
-  </Transition>
-  </div> 
- 
+      <CountryModal
+        :showModal="showModal"
+        :countryData="selectedCountryData"
+        @modalClosed="toggleModal"
+        v-if="showModal"
+      />
+    </Transition>
+  </div>
 </template>
 <script>
 import {
@@ -28,13 +32,13 @@ import {
   LControlLayers,
   LTooltip,
   LPopup,
-  LGeoJson
+  LGeoJson,
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { statesData } from "../assets/us-states.js";
-import  CountryModal  from "./CountryModal.vue";  
-import {getCountryByName } from "../api/countryApi.js";
+import CountryModal from "./CountryModal.vue";
+import { getCountryByName } from "../api/countryApi.js";
 import { getCountryPlaceInfo } from "../api/placesApi.ts";
 
 export default {
@@ -45,13 +49,13 @@ export default {
     LTileLayer,
     LControlLayers,
     LTooltip,
-    LPopup, 
-    CountryModal
+    LPopup,
+    CountryModal,
   },
 
   data() {
     return {
-      zoom: 2, 
+      zoom: 2,
       iconWidth: 25,
       iconHeight: 40,
       highlightedLayer: null,
@@ -68,7 +72,7 @@ export default {
         color: "blue",
         fillOpacity: 0.2,
       },
-    }; 
+    };
   },
   computed: {
     statesData() {
@@ -89,14 +93,14 @@ export default {
       });
       layer.setStyle(this.unselectedStyle);
     },
-    async fetchCountry(name){
-        const data =  await getCountryByName(name);
-        const detailsData = await getCountryPlaceInfo(name);
-        this.selectedCountryData = data;  
-        console.log(detailsData);  
-    }, 
-    toggleModal(){
-      this.showModal = false; 
+    async fetchCountry(name) {
+      const data = await getCountryByName(name);
+      const detailsData = await getCountryPlaceInfo(name);
+      this.selectedCountryData = data;
+      console.log(detailsData);
+    },
+    toggleModal() {
+      this.showModal = false;
     },
     highlightFeature(e) {
       const layer = e.target;
@@ -113,7 +117,7 @@ export default {
     },
     handleClick(e) {
       const layer = e.target;
-      const defaultStyle = this.selectedStyle; 
+      const defaultStyle = this.selectedStyle;
 
       if (this.selectedCountry) {
         if (layer._leaflet_id === this.selectedCountry._leaflet_id) {
@@ -125,9 +129,9 @@ export default {
           }
           this.selectedCountry = null;
         }
-      } 
+      }
       this.selectedCountry = layer;
-      if(this.selectedCountry) {
+      if (this.selectedCountry) {
         this.showModal = true;
       }
       layer.setStyle(defaultStyle);
@@ -157,16 +161,15 @@ export default {
 };
 </script>
 
-
-<style>
+<style lang="scss">
 .v-enter-active,
 .v-leave-active {
   transition: 2s ease;
-
 }
 
 .v-enter-from,
 .v-leave-to {
   transition: 2s ease;
   transform: translate(100%, 0);
-}</style>
+}
+</style>

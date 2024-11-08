@@ -10,42 +10,9 @@
       @drag="onMapDrag"
     >
       <l-geo-json :geojson="statesData" :options="geojsonOptions" />
-
       <l-tile-layer
         url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
-      ></l-tile-layer>
-
-      <l-control-layers />
-
-      <l-polyline
-        :lat-lngs="[
-          [47.334852, -1.509485],
-          [47.342596, -1.328731],
-          [47.241487, -1.190568],
-          [47.234787, -1.358337],
-        ]"
-        color="green"
-      ></l-polyline>
-      <l-polygon
-        :lat-lngs="[
-          [46.334852, -1.509485],
-          [46.342596, -1.328731],
-          [46.241487, -1.190568],
-          [46.234787, -1.358337],
-        ]"
-        color="#41b782"
-        :fill="true"
-        :fillOpacity="0.5"
-        fillColor="#41b782"
-      />
-      <l-rectangle
-        :bounds="[
-          [46.334852, -1.190568],
-          [46.241487, -1.090357],
-        ]"
-      >
-        <l-popup> lol </l-popup>
-      </l-rectangle>
+      ></l-tile-layer> 
     </l-map>
     <Transition>
     <CountryModal :showModal="showModal" :countryData="selectedCountryData" @modalClosed="toggleModal" v-if="showModal"/>   
@@ -58,13 +25,9 @@ import {
   LMap,
   LIcon,
   LTileLayer,
-  LMarker,
   LControlLayers,
   LTooltip,
   LPopup,
-  LPolyline,
-  LPolygon,
-  LRectangle,
   LGeoJson
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -80,13 +43,9 @@ export default {
     LMap,
     LIcon,
     LTileLayer,
-    LMarker,
     LControlLayers,
     LTooltip,
-    LPopup,
-    LPolyline,
-    LPolygon,
-    LRectangle,
+    LPopup, 
     CountryModal
   },
 

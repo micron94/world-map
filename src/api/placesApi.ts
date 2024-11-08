@@ -1,4 +1,10 @@
+type Place = {
+  photos: Photo[]
+}
 
+type Photo = {
+  photoUri: String
+}
 
 
 export const getCountryPlaceInfo = async (country: String)=>{ 
@@ -23,7 +29,7 @@ export const getCountryPlaceInfo = async (country: String)=>{
   }
 
 
-  const getCountryPhotos = async (places: Object[]) => { 
+  const getCountryPhotos = async (places: Place[]) => { 
 
 
 
@@ -31,7 +37,7 @@ export const getCountryPlaceInfo = async (country: String)=>{
   }
 
 
-  const getPlacePhotos = async (place) => {
+  const getPlacePhotos = async (place: Place) => {
 
 
 

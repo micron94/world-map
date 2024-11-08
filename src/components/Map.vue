@@ -72,6 +72,7 @@ import L from "leaflet";
 import { statesData } from "../assets/us-states.js";
 import  CountryModal  from "./CountryModal.vue";  
 import {getCountryByName } from "../api/countryApi.js";
+import { getCountryPlaceInfo } from "../api/placesApi.ts";
 
 export default {
   components: {
@@ -131,8 +132,9 @@ export default {
     },
     async fetchCountry(name){
         const data =  await getCountryByName(name);
-        this.selectedCountryData = data; 
-        console.log(this.selectedCountryData);
+        const detailsData = await getCountryPlaceInfo(name);
+        this.selectedCountryData = data;  
+        console.log(detailsData);  
     }, 
     toggleModal(){
       this.showModal = false; 

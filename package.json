@@ -9,13 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@egjs/vue3-flicking": "^4.11.4",
     "@iconify/vue": "^4.1.1",
     "firebase": "^11.0.1",
     "iconify": "^1.4.0",
     "prettier": "^3.3.3",
     "sass": "^1.70.0",
     "vue": "^3.3.11",
-    "vue-final-modal": "^4.5.3"
+    "vue-final-modal": "^4.5.3",
+    "vue3-carousel": "^0.5.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",

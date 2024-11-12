@@ -93,10 +93,7 @@
   
   <style scoped lang="scss">
   .navigate {
-    padding: 0 16px;
-    height: 100%;
     width: 100%;
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,6 +128,7 @@
     gap: 16px;
     justify-content: center;
     align-items: center;
+    display: none;
   
     span {
       cursor: pointer;

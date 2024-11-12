@@ -6,10 +6,10 @@ const open = ref(true)
  
 <template>
   <div v-if="props.showModal" class="modal">
-    <p>{{ props.countryData ? props.countryData.name.common : 'no data'}}</p>
-    <img class="flag" :src="props.countryData ? props.countryData.flags.png : 'no data'"/>  
+    <p>{{ props.countryData ? props.countryData.data.name.common : 'no data'}}</p>
+    <img class="flag" :src="props.countryData ? props.countryData.images[0].urls.raw : 'no data'"/>  
     <button @click="$emit('modalClosed')">Close</button>
-  </div>   
+  </div>    
 </template> 
  
 <style scoped lang="scss">
@@ -27,6 +27,9 @@ const open = ref(true)
   width: 50%;
   .flag {
   padding: 10px;
+  width: 90%;
+  height: 50%;
+  object-fit: cover;
 
   }
 

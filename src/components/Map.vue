@@ -1,13 +1,13 @@
 <template>
   <div style="height: 100vh; width: 100vw">
     <l-map
-      v-model="zoom"
       v-model:zoom="zoom"
-      :center="[0, 0]"
+      :center="[0, 0]" 
       :min-zoom="3"
       :max-zoom="18"
       @move="handleMove"
       @drag="onMapDrag"
+      ref="map" 
     >
       <l-geo-json :geojson="statesData" :options="geojsonOptions" />
       <l-tile-layer
@@ -27,7 +27,7 @@
 <script>
 import {
   LMap,
-  LIcon,
+  LIcon, 
   LTileLayer,
   LControlLayers,
   LTooltip,
@@ -40,6 +40,7 @@ import { statesData } from "../assets/us-states.js";
 import CountryModal from "./CountryModal.vue";
 import { getCountryByName } from "../api/countryApi.js";
 import { getCountryPlaceInfo } from "../api/placesApi.ts";
+import { searchImages } from "../api/imageApi.js";
 
 export default {
   components: {
@@ -59,6 +60,7 @@ export default {
       iconWidth: 25,
       iconHeight: 40,
       highlightedLayer: null,
+      mapRef: null,
       showModal: false,
       selectedCountry: null,
       selectedCountryData: null,
@@ -84,6 +86,15 @@ export default {
       };
     },
   },
+  mounted() {
+    /*
+  setTimeout(() => {
+    console.log(this.$refs.map);
+    console.log(this.$refs.map.leafletObject);
+
+    this.$refs.map.leafletObject.setView(new L.LatLng(40.737, -73.923), 1);  
+  }, 100);  // Adjust this delay if needed
+*/}, 
   methods: {
     onEachFeature(feature, layer) {
       layer.on({
@@ -96,8 +107,8 @@ export default {
     async fetchCountry(name) {
       const data = await getCountryByName(name);
       const detailsData = await getCountryPlaceInfo(name);
-      this.selectedCountryData = data;
-      console.log(detailsData);
+      const imageData = await searchImages(name);
+      this.selectedCountryData = {data: data, images: imageData, detailsData: detailsData};
     },
     toggleModal() {
       this.showModal = false;
@@ -118,7 +129,6 @@ export default {
     handleClick(e) {
       const layer = e.target;
       const defaultStyle = this.selectedStyle;
-
       if (this.selectedCountry) {
         if (layer._leaflet_id === this.selectedCountry._leaflet_id) {
           this.unselectCountry();
@@ -151,7 +161,7 @@ export default {
     handleMove(event) {
       // Adjust coordinates when zooming out beyond a certain threshold
     },
-    onMapDrag() {
+    onMapDrag(e) {
       if (this.$refs.mapObject) {
         const bounds = this.$refs.mapObject.getBounds();
         this.maxBounds = bounds;

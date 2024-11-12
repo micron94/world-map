@@ -108,6 +108,7 @@ export default {
       const data = await getCountryByName(name);
       const detailsData = await getCountryPlaceInfo(name);
       const imageData = await searchImages(name);
+      console.log(imageData);
       this.selectedCountryData = {data: data, images: imageData, detailsData: detailsData};
     },
     toggleModal() {
